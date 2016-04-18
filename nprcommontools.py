@@ -36,3 +36,18 @@ def wikipedia_category_members(category):
             cmcontinue = False
     return category_members
 #END wikipedia_category_members()
+
+def letter_shift(l,n):
+    '''
+    letter_shift(l,n): shift letter l by n places
+    
+    NOTE: always returns a lowercase letter
+    '''
+    l = l.lower()
+    assert type(n) == int
+    assert len(l) == 1
+    
+    new_ord = ord(l) + n
+    while new_ord > 122:
+        new_ord = new_ord - 26
+    return chr(new_ord)
