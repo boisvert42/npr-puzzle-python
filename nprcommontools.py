@@ -57,9 +57,10 @@ def get_category_members(name):
     Use NLTK to get members of a category
     '''
     from nltk.corpus import wordnet as wn
+    import six
     members = set()
     # We behave slightly differently if `name` is a string or synset
-    if isinstance(name,basestring):
+    if isinstance(value, six.string_types):
         synsets = wn.synsets(name)
     else: # we have a synset
         synsets = [name]
