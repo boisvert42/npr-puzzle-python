@@ -51,8 +51,6 @@ def letter_shift(l,n):
     while new_ord > 122:
         new_ord = new_ord - 26
     return chr(new_ord)
-    
-from nltk.corpus import wordnet as wn
 
 def get_category_members(name):
     '''
