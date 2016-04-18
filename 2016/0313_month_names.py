@@ -20,7 +20,7 @@ for i in range(1,13):
 #%%
 # Read in famous names
 month_names = defaultdict(list)
-with open(r'FamousNames.txt','rb') as fid:
+with open(r'../wordlists/FamousNames.txt','rb') as fid:
     for line in fid.readlines():
         line = line.strip().lower()
         name,score = line.split('\t')
