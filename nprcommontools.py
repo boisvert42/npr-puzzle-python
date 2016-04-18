@@ -51,3 +51,17 @@ def letter_shift(l,n):
     while new_ord > 122:
         new_ord = new_ord - 26
     return chr(new_ord)
+    
+from nltk.corpus import wordnet as wn
+
+def get_category_members(name):
+    '''
+    Use NLTK to get members of a category
+    '''
+    from nltk.corpus import wordnet as wn
+    members = set()
+    synsets = wn.synsets(name)
+    for synset in synsets:
+        members = members.union(set([w for s in synset.closure(lambda s:s.hyponyms(),depth=10) for w in s.lemma_names()]))
+    return members
+
