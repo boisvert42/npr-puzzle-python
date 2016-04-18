@@ -58,7 +58,11 @@ def get_category_members(name):
     '''
     from nltk.corpus import wordnet as wn
     members = set()
-    synsets = wn.synsets(name)
+    # We behave slightly differently if `name` is a string or synset
+    if isinstance(name,basestring):
+        synsets = wn.synsets(name)
+    else: # we have a synset
+        synsets = [name]
     for synset in synsets:
         members = members.union(set([w for s in synset.closure(lambda s:s.hyponyms(),depth=10) for w in s.lemma_names()]))
     return members
