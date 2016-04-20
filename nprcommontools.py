@@ -68,3 +68,21 @@ def get_category_members(name):
         members = members.union(set([w for s in synset.closure(lambda s:s.hyponyms(),depth=10) for w in s.lemma_names()]))
     return members
 
+def get_famous_names(minscore=90):
+    '''
+    Read names from FamousNames.txt with the given minimum score
+    
+    Returns a dict of name -> score
+    '''
+    return_dict = dict()
+    import os
+    this_dir, this_filename = os.path.split(__file__)
+    famous_names_path = os.path.join(this_dir,'wordlists','FamousNames.txt')
+    with open(famous_names_path,'rb') as fid:
+        for line in fid.readlines():
+            line = line.strip()
+            name,score = line.split('\t')
+            score = int(score)
+            if score >= minscore:
+                return_dict[name] = score
+    return return_dict
