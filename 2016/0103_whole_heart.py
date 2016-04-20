@@ -41,7 +41,7 @@ keep_going_flag = True
 while keep_going_flag:
     for word in found_words:
         new_set = set()
-        print word
+        #print word
         if word == last_word:
             print word_to_path[word]
             keep_going_flag = False
