@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 '''
-NPR 2015-11-29
+NPR 2015-11-22
 
-http://www.npr.org/2015/11/29/457591424/between-alphabetizing-and-best-guesses-can-you-find-this-weeks-answers
+http://www.npr.org/2015/11/22/456942541/high-level-puzzlers-will-have-figured-out-this-headline-by-now
 
 This week's Thanksgiving challenge comes from listener Dan Pitt of Palo Alto, Calif. 
 It's not very hard. The following three Thanksgiving dishes have something 
