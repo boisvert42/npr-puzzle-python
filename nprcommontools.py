@@ -60,6 +60,18 @@ def letter_shift(l,n):
     while new_ord > 122:
         new_ord = new_ord - 26
     return chr(new_ord)
+    
+def get_synonyms(word):
+    '''
+    Use wordnet to get synonyms
+    '''
+    synonyms = set()
+    synsets = wn.synsets(word)
+    for synset in synsets:
+    for w in synset.lemma_names():
+        if w != word:
+            syns.add(w)
+    return syns
 
 def get_category_members(name):
     '''
