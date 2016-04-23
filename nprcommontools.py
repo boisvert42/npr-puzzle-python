@@ -66,7 +66,7 @@ def get_synonyms(word):
     Use wordnet to get synonyms
     '''
     from nltk.corpus import wordnet as wn
-    synonyms = set()
+    syns = set()
     synsets = wn.synsets(word)
     for synset in synsets:
     for w in synset.lemma_names():
