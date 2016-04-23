@@ -65,6 +65,7 @@ def get_synonyms(word):
     '''
     Use wordnet to get synonyms
     '''
+    from nltk.corpus import wordnet as wn
     synonyms = set()
     synsets = wn.synsets(word)
     for synset in synsets:
