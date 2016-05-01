@@ -69,9 +69,9 @@ def get_synonyms(word):
     syns = set()
     synsets = wn.synsets(word)
     for synset in synsets:
-    for w in synset.lemma_names():
-        if w != word:
-            syns.add(w)
+        for w in synset.lemma_names():
+            if w != word:
+                syns.add(w)
     return syns
 
 def get_category_members(name):
