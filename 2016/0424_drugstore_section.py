@@ -3,10 +3,10 @@ NPR Puzzle 2016-04-24
 
 http://www.npr.org/2016/04/24/475299329/finish-this-puzzle-and-youll-be-just-like-overachievers-you-both-exceed
 
-Name a famous singer — first and last names. 
+Name a famous singer -- first and last names. 
 The last four letters of the first name spelled 
 backward plus the first four letters of the last name 
-spelled forward ... read together, in order, name a 
+spelled forward, read together, in order, name a 
 section of products in a drugstore. What is it?
 '''
 import sys
