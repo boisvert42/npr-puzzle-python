@@ -14,6 +14,14 @@ def remove_accents(s):
     '''
     return ''.join((c for c in unicodedata.normalize('NFD', s.decode('utf-8')) if unicodedata.category(c) != 'Mn'))
 
+def alpha_only(s):
+    '''
+    Remove everything but alphas from a string
+    '''
+    import re
+    return re.sub('[^A-Za-z]+','',s)
+
+
 def wikipedia_category_members(category):
     '''
     Get category members from Wikipedia
