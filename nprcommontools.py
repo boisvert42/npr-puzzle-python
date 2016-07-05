@@ -81,6 +81,20 @@ def get_synonyms(word):
             if w != word:
                 syns.add(w)
     return syns
+    
+def get_antonyms(word):
+    '''
+    Use wordnet to get antonyms
+    '''
+    from nltk.corpus import wordnet as wn
+    ants = set()
+    synsets = wn.synsets(word)
+    for synset in synsets:
+        for lemma in synset.lemmas():
+            ants1 = lemma.antonyms()
+            for a in ants1:
+                ants.add(a.name())
+    return ants
 
 def get_category_members(name):
     '''

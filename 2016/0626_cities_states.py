@@ -1,5 +1,5 @@
 '''
-NPR Puzzle 2016-06-05
+NPR Puzzle 2016-06-26
 
 http://www.npr.org/2016/06/26/483521883/welcome-to-an-affair-of-phrases-each-entwined-by-a-tiny-of
 
