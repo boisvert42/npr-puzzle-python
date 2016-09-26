@@ -13,14 +13,6 @@ They all end in the same three letters.
 import sys
 sys.path.append('..')
 import rhyme
-from nltk.corpus import wordnet as wn
-#%%
-def last_letter_alphabetically(l):
-    let = ''
-    for x in l:
-        if x[-1] > let:
-            let = x
-    return let
 
 #%%
 f_words = [_x for _x in rhyme._cdict_words if len(_x) == 4 and _x.startswith('f')]
