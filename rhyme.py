@@ -40,10 +40,12 @@ def rhyming_part(pron):
     This is defined as everything from the first stressed syllable on
     The result will be a list of lists; the rhyming part for each pronunciation
     '''
-    
-    for i in range(len(pron)):
-        if '1' in pron[i]:
-            return pron[i:]
+    stress_numbers = ['1','2','0']
+    for num in stress_numbers:
+	    if num in ''.join(pron):
+	        for i in range(len(pron)):
+                 if num in pron[i]:
+				    return pron[i:]
     # In case somehow we missed something
     return None
         
