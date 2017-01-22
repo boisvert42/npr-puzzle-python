@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 NPR 2017-01-15
-http://www.npr.org/puzzle
+https://n.pr/2jlL4NU
 Take the first and last names of a famous comedian.
 The first three letters of the first name and the
 first letter of the last name, in order, spell the
