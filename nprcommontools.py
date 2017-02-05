@@ -12,7 +12,7 @@ def remove_accents(s):
     '''
     Remove diacritics from a string
     '''
-    return ''.join((c for c in unicodedata.normalize('NFD', s.decode('utf-8')) if unicodedata.category(c) != 'Mn'))
+    return ''.join((c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn'))
 
 def alpha_only(s):
     '''
@@ -22,35 +22,49 @@ def alpha_only(s):
     return re.sub('[^A-Za-z]+','',s)
 
 
-def wikipedia_category_members(category):
+def wikipedia_category_members(category,max_depth = 2):
     '''
     Get category members from Wikipedia
     '''
     category_members = set()
     # Convert spaces to underscore
     category = category.replace(' ','_')
-    cmcontinue_str = ''
-    cmcontinue = True
-    while cmcontinue:
-        url = "http://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:{0}&cmlimit=500&format=json&cmnamespace=0&cmtype=page&utf8=&cmcontinue={1}".format(category,cmcontinue_str)
-        r = requests.get(url)
-        json = r.json()
-        cat_member_list = json['query']['categorymembers']
-        for row in cat_member_list:
+    # We will get this category and all its subcategories
+    # We don't go forever because we could get stuck in an infinite loop
+    categories = {'Category:{0}'.format(category) : 0}
+    while categories:
+        # Remove the first category and use that one
+        my_category = categories.keys()[0]
+        my_depth = categories.pop(my_category)
+        cmcontinue_str = ''
+        cmcontinue = True
+        while cmcontinue:
+            url = "http://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle={0}&cmlimit=500&format=json&utf8=&cmcontinue={1}".format(my_category,cmcontinue_str)
+            r = requests.get(url)
+            json = r.json()
+            cat_member_list = json['query']['categorymembers']
+            for row in cat_member_list:
+                # If the namespace == 14, then we have a subcategory
+                if row['ns'] == 14 and my_depth < max_depth:
+                    categories[remove_accents(row['title'].replace(' ','_'))] = my_depth+1
+                # If the namespace is 0, we have a page
+                elif row['ns'] == 0:
+                    try:
+                        title = remove_accents(row['title'])
+                        # Remove trailing parens, if any
+                        if title[-1] == ')' and title.find(' (') > -1:
+                            ix = title.find(' (')
+                            title = title[:ix]
+                        category_members.add(title)
+                    except UnicodeDecodeError as e:
+                        print e, row['title']
+                    except UnicodeEncodeError as e:
+                        print e, row['title']
             try:
-                title = remove_accents(row['title'])
-                # Remove trailing parens, if any
-                if title[-1] == ')' and title.find(' (') > -1:
-                    ix = title.find(' (')
-                    title = title[:ix]
-                category_members.add(title)
-            except UnicodeDecodeError as e:
-                print e, row['title']
-        try:
-            cmcontinue_str = json['continue']['cmcontinue']
-            time.sleep(1)
-        except KeyError:
-            cmcontinue = False
+                cmcontinue_str = json['continue']['cmcontinue']
+                time.sleep(1)
+            except KeyError:
+                cmcontinue = False
     return category_members
 #END wikipedia_category_members()
 
@@ -114,7 +128,7 @@ def get_category_members(name):
     
 def get_hypernyms(name):
     '''
-    List the hypernyms of a word or subset
+    List the hypernyms of a word or synset
     '''
     from nltk.corpus import wordnet as wn
     import six
