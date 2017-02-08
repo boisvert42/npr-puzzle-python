@@ -16,20 +16,35 @@ from nprcommontools import wikipedia_category_members, sort_string, alpha_only
 #%%
 # Letters that we think can turn into another one by adding a stroke
 stroked_letters = {
-    'F':'EP',
+    'F':'E',
     'O':'Q',
     'P':'RB',
     'I':'TPDL',
     'T':'I',
     'R':'B',
-    'J':'UO',
     'U':'O',
-    'C':'G'
+    'C':'GO'
 }
 
+#%%
 fairy_tale_characters = wikipedia_category_members('Characters_in_fairy_tales',max_depth=3)
-fairy_tale_characters = fairy_tale_characters.union(wikipedia_category_members('Once_Upon_a_Time_(TV_series)_characters'))
-fairy_tale_characters = fairy_tale_characters.union(set(('Sleepy','Happy','Dopey','Grumpy','Sneezy','Bashful','Doc')))
+fairy_tale_characters = fairy_tale_characters.union(wikipedia_category_members('Fairy_tales',max_depth=3))
+
+#%%
+# Lots of things in here are separated by "and"s.  Let's split those
+f2 = copy.deepcopy(fairy_tale_characters)
+for f in f2:
+    if ' and ' in f:
+        arr = f.split(' and ')
+        for w in arr:
+            w2 = w
+            w = w.replace('the ','')
+            w = w.replace('The ','')
+            w = w.strip()
+            w2 = w2.strip()
+            #print w
+            fairy_tale_characters.add(w)
+            fairy_tale_characters.add(w2)
 
 ft_dict = dict((sort_string(alpha_only(x.upper())),x) for x in fairy_tale_characters)
 
