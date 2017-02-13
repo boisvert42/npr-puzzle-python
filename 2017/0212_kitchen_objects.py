@@ -4,7 +4,7 @@ NPR 2017-02-12
 '''
 import sys
 sys.path.append('..')
-from npr_common_tools import get_category_members
+from nprcommontools import get_category_members
 
 objects = get_category_members('object')
 for word in objects:
