@@ -19,7 +19,7 @@ words = frozenset([_ for _ in brown.words() if _ == _.lower() and len(_) >= 4 an
 letter_dict = {'e':'a','a':'e','w':'m','m':'w','r':'j',
                'u':'n','n':'u','p':'d','d':'p','q':'b','b':'q',
                'h':'y'}
-possible_letters = frozenset(letter_dict.keys())
+
 #%%
 for w in words:
     try:
