@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 """
-NPR 2016-05-15
+NPR 2017-08-06
 
-http://www.npr.org/2016/05/15/477946950/looking-for-common-ground-sometimes-all-it-takes-is-3-letters
+http://www.npr.org/2017/08/06/541834096/sunday-puzzle-a-task-of-8-cities
 
-Name a creature in nine letters. The name contains a T. 
-Drop the T, and the remaining letters can be rearranged 
-to spell two related modes of transportation. What are they?
+The name of what 9-letter animal can be spelled from the letters of INAUGURATION?
 """
 # This doesn't actually give the intended answer but there are some nice alternatives here
 import sys
