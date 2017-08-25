@@ -83,17 +83,28 @@ def letter_shift(l,n):
         new_ord = new_ord - 26
     return chr(new_ord)
     
-def get_synonyms(word):
+def get_synonyms(name,similar_to=True):
     '''
     Use wordnet to get synonyms
     '''
     from nltk.corpus import wordnet as wn
+    import six
     syns = set()
-    synsets = wn.synsets(word)
+    if isinstance(name, six.string_types):
+        synsets = wn.synsets(name)
+    else: # we have a synset
+        synsets = [name]
     for synset in synsets:
         for w in synset.lemma_names():
-            if w != word:
+            if w != name:
                 syns.add(w)
+        # Add in "similar_tos"
+        if similar_to:
+            for s in synset.similar_tos():
+                for w in s.lemma_names():
+                    if w != name:
+                        syns.add(w)
+            
     return syns
     
 def get_antonyms(word):
