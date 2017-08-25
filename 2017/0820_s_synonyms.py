@@ -15,14 +15,13 @@ def is_adjective(word):
     ''' Check if the word is an adjective, per Wordnet '''
     syns = wn.synsets(word)
     for s in syns:
-        if s.pos() == 'a':
+        if s.pos() in ('a','s'):
             return True
     return False
 
 brown_words = frozenset(x for x in brown.words() if len(x) == 5 and x.isalpha() and x.startswith('s'))
 #%%
 # We'll just print all five-letter adjectives beginning with S and go by inspection.
-for word in brown_words:
+for word in sorted(brown_words):
     if is_adjective(word):
         print word
-        
