@@ -159,6 +159,8 @@ def get_famous_names(minscore=90):
     famous_names_path = os.path.join(this_dir,'wordlists','FamousNames.txt')
     with open(famous_names_path,'rb') as fid:
         for line in fid.readlines():
+            if line.startswith('#'):
+                continue
             line = line.strip()
             name,score = line.split('\t')
             score = int(score)
