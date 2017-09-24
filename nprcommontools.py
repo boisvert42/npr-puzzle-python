@@ -1,6 +1,10 @@
 import unicodedata
 import time
 import requests
+import re
+from nltk.corpus import wordnet as wn
+import six
+import os
 
 def sort_string(s):
     '''
@@ -18,9 +22,7 @@ def alpha_only(s):
     '''
     Remove everything but alphas from a string
     '''
-    import re
     return re.sub('[^A-Za-z]+','',s)
-
 
 def wikipedia_category_members(category,max_depth = 2):
     '''
@@ -87,8 +89,6 @@ def get_synonyms(name,similar_to=True):
     '''
     Use wordnet to get synonyms
     '''
-    from nltk.corpus import wordnet as wn
-    import six
     syns = set()
     if isinstance(name, six.string_types):
         synsets = wn.synsets(name)
@@ -111,7 +111,6 @@ def get_antonyms(word):
     '''
     Use wordnet to get antonyms
     '''
-    from nltk.corpus import wordnet as wn
     ants = set()
     synsets = wn.synsets(word)
     for synset in synsets:
@@ -125,8 +124,6 @@ def get_category_members(name):
     '''
     Use NLTK to get members of a category
     '''
-    from nltk.corpus import wordnet as wn
-    import six
     members = set()
     # We behave slightly differently if `name` is a string or synset
     if isinstance(name, six.string_types):
@@ -141,8 +138,6 @@ def get_hypernyms(name):
     '''
     List the hypernyms of a word or synset
     '''
-    from nltk.corpus import wordnet as wn
-    import six
     members = set()
     # We behave slightly differently if `name` is a string or synset
     if isinstance(name, six.string_types):
@@ -160,11 +155,12 @@ def get_famous_names(minscore=90):
     Returns a dict of name -> score
     '''
     return_dict = dict()
-    import os
     this_dir, this_filename = os.path.split(__file__)
     famous_names_path = os.path.join(this_dir,'wordlists','FamousNames.txt')
     with open(famous_names_path,'rb') as fid:
         for line in fid.readlines():
+            if line.startswith('#'):
+                continue
             line = line.strip()
             name,score = line.split('\t')
             score = int(score)
