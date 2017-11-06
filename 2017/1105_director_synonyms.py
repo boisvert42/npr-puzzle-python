@@ -14,15 +14,29 @@ sys.path.append('..')
 from nprcommontools import get_famous_names, sort_string, wikipedia_category_members
 
 from nltk.corpus import wordnet as wn
+from nltk.tokenize import word_tokenize
+from nltk import FreqDist
 
 #%%
 # "common" words from Wordnet
-common_word_dict = dict()
+# We use words in example sentences
+def_corpus = []
+for s in wn.all_synsets():
+    for ex in s.examples():
+        for w in word_tokenize(ex):
+            if w.isalpha():
+                def_corpus.append(w.lower())
+            
+fdist = FreqDist(def_corpus)
 common_words = set()
-for s1 in wn.all_lemma_names():
-    if s1.isalpha() and s1 == s1.lower():
-        common_word_dict[sort_string(s1)] = common_word_dict.get(sort_string(s1),[]) + [s1]
-        common_words.add(s1)
+common_word_dict = dict()
+NUM_WORDS = 50000
+for word, frequency in fdist.most_common(NUM_WORDS):
+    # Keep only the best short words
+    if len(word) > 2 or word in ('a','i') or fdist[word] > 100:
+        common_words.add(word)
+        common_word_dict[sort_string(word)] = common_word_dict.get(sort_string(word),[]) + [word]
+
 common_word_sort_set = frozenset(common_word_dict.keys())
 
 #%%
@@ -41,5 +55,3 @@ for name in names:
         if middle in common_word_sort_set:
             for word2 in common_word_dict[middle]:
                 print name, word, word2
-
-
