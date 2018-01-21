@@ -2,7 +2,8 @@ import unicodedata
 import time
 import requests
 import re
-from nltk.corpus import wordnet as wn
+from nltk.corpus import wordnet as wn, brown
+from nltk.tokenize import word_tokenize
 import six
 import os
 
@@ -167,3 +168,29 @@ def get_famous_names(minscore=90):
             if score >= minscore:
                 return_dict[name] = score
     return return_dict
+
+def get_common_words(source='wordnet'):
+    '''
+    Get common words from wordnet (by looking at example sentences)
+    other sources may be added later
+    '''
+    words = set()
+    if source == 'wordnet':
+        for s in wn.all_synsets():
+            for ex in s.examples():
+                for w in word_tokenize(ex):
+                    if w.isalpha():
+                        words.add(w.lower())
+    if source == 'brown':
+        words = set([x.lower() for x in brown.words() if x.isalpha()])
+    return words
+
+def make_sorted_dict(words):
+    '''
+    From an iterable of words, return a dictionary of [sorted word] -> [list of words]
+    '''
+    s_dict = dict()
+    for w in words:
+        s = sort_string(alpha_only(w).lower())
+        s_dict[s] = s_dict.get(s,[]) + [w]
+    return s_dict
