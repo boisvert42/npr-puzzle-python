@@ -1,24 +1,19 @@
 #!/usr/bin/env python
 """
-NPR 2018-01-21
-https://www.npr.org/2018/01/21/579110492/sunday-puzzle-it-takes-two
+NPR 2018-02-04
+https://www.npr.org/2018/02/04/582750978/sunday-puzzle-stuck-in-the-middle
 
-Take the name of a conveyance in seven letters. 
-Drop the middle letter, and the remaining letters can be rearranged to name 
-the place where such a conveyance is often used. What is it?
+In English, a short "u" sound is usually spelled with a "u," as in "fun" and "luck." 
+Occasionally it's spelled with an "o," as in "come" and "love." 
+Can you name two everyday one-syllable words in which a short "u" sound is 
+spelled with an "a"?
 """
-import sys
-sys.path.append('..')
-import nprcommontools as nct
+from nltk.corpus import cmudict
+cdict = cmudict.dict()
 
 #%%
-#words = nct.get_common_words('brown')
-words = nct.get_category_members('physical_entity')
-word_dict = nct.make_sorted_dict(words)
-sorted_set = frozenset(word_dict.keys())
-#%%
-conveyances = [x for x in nct.get_category_members('conveyance') if x.isalpha() and len(x) == 7]
-for conv in conveyances:
-    sorted_conv = nct.sort_string(conv[:3]+conv[4:])
-    if sorted_conv in sorted_set:
-        print conv, word_dict[sorted_conv]
+for word in cdict.iterkeys():
+    if 'a' in word:
+        for p in cdict[word]:
+            if 'AH1' in p and sum([c.isdigit() for c in ''.join(p)]) == 1:
+                print word
