@@ -60,9 +60,9 @@ def wikipedia_category_members(category,max_depth = 2):
                             title = title[:ix]
                         category_members.add(title)
                     except UnicodeDecodeError as e:
-                        print e, row['title']
+                        print(e, row['title'])
                     except UnicodeEncodeError as e:
-                        print e, row['title']
+                        print(e, row['title'])
             try:
                 cmcontinue_str = json['continue']['cmcontinue']
                 time.sleep(1)
