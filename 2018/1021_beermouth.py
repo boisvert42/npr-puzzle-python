@@ -6,7 +6,8 @@ Take the 9 letters of BEER MOUTH. Arrange them in a 3x3 array so that
 the three lines Across, three lines Down, and both diagonals spell 
 common 3-letter words. Can you do it?
 '''
-
+import sys
+sys.path.append('..')
 import nprcommontools as nct
 import itertools
 
