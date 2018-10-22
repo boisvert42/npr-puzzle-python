@@ -169,19 +169,25 @@ def get_famous_names(minscore=90):
                 return_dict[name] = score
     return return_dict
 
-def get_common_words(source='wordnet'):
+def get_common_words(source='examples'):
     '''
     Get common words from wordnet (by looking at example sentences)
     other sources may be added later
     '''
     words = set()
-    if source == 'wordnet':
+    if source == 'examples':
         for s in wn.all_synsets():
             for ex in s.examples():
                 for w in word_tokenize(ex):
                     if w.isalpha():
                         words.add(w.lower())
-    if source == 'brown':
+    elif source == 'definitions':
+        for s in wn.all_synsets():
+            mydef = s.definition()
+            for w in word_tokenize(mydef):
+                if w.isalpha():
+                    words.add(w.lower())
+    elif source == 'brown':
         words = set([x.lower() for x in brown.words() if x.isalpha()])
     return words
 
