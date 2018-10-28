@@ -80,10 +80,14 @@ def letter_shift(l,n):
     l = l.lower()
     assert type(n) == int
     assert len(l) == 1
+    if not l.isalpha():
+        return l
     
     new_ord = ord(l) + n
     while new_ord > 122:
         new_ord = new_ord - 26
+    while new_ord < 97:
+        new_ord = new_ord + 26
     return chr(new_ord)
     
 def get_synonyms(name,similar_to=True):
