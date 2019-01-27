@@ -37,7 +37,7 @@ def wikipedia_category_members(category,max_depth = 2):
     categories = {'Category:{0}'.format(category) : 0}
     while categories:
         # Remove the first category and use that one
-        my_category = categories.keys()[0]
+        my_category = list(categories.keys())[0]
         my_depth = categories.pop(my_category)
         cmcontinue_str = ''
         cmcontinue = True
@@ -80,14 +80,10 @@ def letter_shift(l,n):
     l = l.lower()
     assert type(n) == int
     assert len(l) == 1
-    if not l.isalpha():
-        return l
     
     new_ord = ord(l) + n
     while new_ord > 122:
         new_ord = new_ord - 26
-    while new_ord < 97:
-        new_ord = new_ord + 26
     return chr(new_ord)
     
 def get_synonyms(name,similar_to=True):
@@ -162,7 +158,7 @@ def get_famous_names(minscore=90):
     return_dict = dict()
     this_dir, this_filename = os.path.split(__file__)
     famous_names_path = os.path.join(this_dir,'wordlists','FamousNames.txt')
-    with open(famous_names_path,'rb') as fid:
+    with open(famous_names_path,'r') as fid:
         for line in fid.readlines():
             if line.startswith('#'):
                 continue
