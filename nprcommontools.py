@@ -19,11 +19,14 @@ def remove_accents(s):
     '''
     return ''.join((c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn'))
 
-def alpha_only(s):
+def alpha_only(s, preserve_spaces=False):
     '''
     Remove everything but alphas from a string
     '''
-    return re.sub('[^A-Za-z]+','',s)
+    if preserve_spaces:
+        return re.sub('[^A-Za-z ]+','',s)
+    else:
+        return re.sub('[^A-Za-z]+','',s)
 
 def wikipedia_category_members(category,max_depth = 2):
     '''
