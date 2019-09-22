@@ -42,10 +42,10 @@ def rhyming_part(pron):
     '''
     stress_numbers = ['1','2','0']
     for num in stress_numbers:
-	    if num in ''.join(pron):
-	        for i in range(len(pron)):
+        if num in ''.join(pron):
+            for i in range(len(pron)):
                  if num in pron[i]:
-				    return pron[i:]
+                    return pron[i:]
     # In case somehow we missed something
     return None
         
